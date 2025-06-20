@@ -1,0 +1,50 @@
+# Camera Configuration
+camera:
+  source: "C:\\Users\\dhruv\\Downloads\\ok2.mp4"  # 0 for webcam, or RTSP URL like "rtsp://camera_ip:port/stream"
+  width: 480
+  height: 360
+  fps: 30
+
+# Detection Configuration
+detection:
+  model_path: "yolov8n.pt"  # Will download automatically if not present
+  confidence_threshold: 0.5
+  vehicle_classes: [2, 3, 5, 7]  # car, motorcycle, bus, truck (COCO classes)
+
+# Tracking Configuration
+tracking:
+  max_age: 30
+  n_init: 3
+  max_cosine_distance: 0.7
+
+# Collision Detection Configuration
+collision:
+  overlap_threshold: 0.3  # Minimum overlap ratio to consider collision
+  velocity_threshold: 5.0  # Minimum velocity change to trigger collision
+  time_window: 1.0  # Time window in seconds to analyze motion
+  cooldown_period: 5.0  # Seconds to wait before detecting another collision for same vehicles
+
+# Alert Configuration
+alerts:
+  enabled: true
+  sms:
+    enabled: true
+    account_sid: "${TWILIO_ACCOUNT_SID}"
+    auth_token: "${TWILIO_AUTH_TOKEN}"
+    from_number: "${TWILIO_FROM_NUMBER}"
+    to_numbers:
+      - "${TWILIO_TO_NUMBER}"  # Emergency contact 1
+
+  # Logging Configuration
+  logging:
+    enabled: true
+    log_file: "collision_log.csv"
+    video_save: true
+    video_duration: 10  # seconds to save before and after collision
+
+# Display Configuration
+display:
+  show_window: true
+  window_name: "Vehicle Collision Detection"
+  draw_tracks: true
+  draw_collision_alerts: true
